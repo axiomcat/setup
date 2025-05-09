@@ -33,7 +33,7 @@ copy_dir() {
 
 	pushd $from > /dev/null
 
-    dirs=$(find . -maxdepth 1 -mindepth 1 -type d)
+    dirs=$(find . -maxdepth 1 -mindepth 1 -type d -not -iwholename '*.git')
     for dir in $dirs; do
         execute rm -rf $to/$dir
         execute cp -r $dir $to/$dir
@@ -41,7 +41,7 @@ copy_dir() {
     popd
 }
 
-# copy_dir .config $XDG_CONFIG_HOME
+copy_dir $HOME/repos/dotfiles/.config $HOME
 
 copy_file() {
     from=$1
@@ -51,4 +51,4 @@ copy_file() {
     execute cp $from $to/$name
 }
 
-# copy_file .specialrc ~/
+copy_file $HOME/repos/dotfiles/.tmux.conf ~/
